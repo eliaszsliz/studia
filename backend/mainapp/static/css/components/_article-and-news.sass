@@ -1,0 +1,17 @@
+@import "variables"
+
+.big-and-nice-letter
+  float: left
+  font-size: 4rem
+  color: $brisk-color
+  font-family: $font-family-serif
+  line-height: .7
+  text-shadow: 1px 0 2px rgba(0, 0, 0, 0.2)
+
+.article-body
+  p:first-of-type
+    &::first-letter
+      @extend .big-and-nice-letter
+
+  &:first-letter
+    @extend .big-and-nice-letter

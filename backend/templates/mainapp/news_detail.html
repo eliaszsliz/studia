@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        {% if request.GET.category %}
+            <a href="{% url 'category-detail' slug=request.GET.category %}">
+                Lista kategorii
+            </a>
+        {% else %}
+            <a href="{% url 'news-list' %}">
+                Lista newsów
+            </a>
+        {% endif %}
+    </li>
+
+    <li class="addons-lvl-2">
+        <span>
+            {{ object.title }}
+        </span>
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 header header-bg text-center">
+            {% if object.title|length > 30 %}
+                <h3>{{ object.title }}</h3>
+            {% elif object.title|length > 16 %}
+                <h2>{{ object.title }}</h2>
+            {% else %}
+                <h1>{{ object.title }}</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if object.created_at %}
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <small class="text-muted">Data:</small>
+            {{ object.created_at_formated }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row mt-3">
+        <div class="col-11 mx-auto news-body">
+            {{ object.body|safe }}
+        </div>
+    </div>
+
+    {% if object.categories.count %}
+    <div class="row">
+        <div class="col-11 mx-auto text-right my-3">
+            <small class="text-muted">Kategorie:</small>
+            {% for category in object.categories.all %}
+                    <a href="{{ category.get_absolute_url }}" class="comma-list">{{ category }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-11 mx-auto text-right text-uppercase mt-3 pt-3">
+            <a href="{% url 'author-list' %}" class="btn btn-primary btn-sm">Lista newsów</a>
+        </div>
+    </div>
+
+
+
+{% endblock %}

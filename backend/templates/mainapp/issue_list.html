@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista numerów
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        <span>
+            Lista numerów
+        </span>
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="row mb-3 mb-lg-5">
+        <div class="col-12 header header-bg">
+            <h1 class="issue-header">Archiwum</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12 col-lg-11 mx-auto">
+    {% for object in object_list %}
+        <div class="row mt-lg-5">
+            <div class="col-12 py-3 mb-lg-2 text-center">
+                <a href="{{ object.get_absolute_url }}" class="h3 issue-list-header">
+                    <b>{{ object.date }}</b>
+                </a>
+
+                <span class="float-right fa-angle-top"></span>
+                
+            </div>
+
+            <div class="col-12 col-lg-3 mt-2">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href="{{ object.get_absolute_url }}" class="d-inline-block">
+                            <img src="{{ object.cover_url }}"
+                                 class="img-fluid small-shadow max-w-170"
+                                 alt="Studia Pigoniana - Okładka {{ object.date }}">
+                        </a>
+                    </div>
+                    <div class="col-12 text-center py-1">
+                        <a href="{{ object.get_absolute_url }}" class="smaller ">( więcej o numerze )</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if object.articles.count %}
+                <div class="col-12 col-md-11 col-lg-9 mx-auto mt-2">
+                    <table class="table table-hover table-semi-sm table-last-row-border">
+                        {% for article in object.articles.all %}
+                            <tr data-href="{{ article.get_absolute_url }}" class="clickable-row">
+                                <td>{{ article.title }}</td>
+                                <td><a href="{{ article.get_absolute_url }}">Czytaj</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="col-12 col-lg-9 my-2 {% if not object.short_description %}last-p-is-inline{% endif %}">
+                        {% if object.short_description %}
+                            <p class="p-2 pt-lg-0 text-justify">
+                                {{ object.short_description }}
+                                {% if object.alternative_link %}
+                                    <a href="{{ object.get_absolute_url }}" class="brisk-link no-wrap">( więcej )</a>
+                                {% endif %}
+                            </p>
+                        {% else %}
+                            {{ object.description|safe|truncatewords_html:"80" }}
+                            {% if object.description|safe|wordcount > 80 %}
+                                <a href="{{ object.get_absolute_url }}" class="brisk-link no-wrap">( więcej )</a>
+                            {% endif %}
+                        {% endif %}
+
+                </div>
+            {% endif %}
+
+            {% if object.articles.count %}
+                <div class="col-11 col-lg-12 mx-auto text-right mb-2 mb-lg-5">
+                    <span class="small text-muted">
+                        Artykułów: {{ object.articles.count }}
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

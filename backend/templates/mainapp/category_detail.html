@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Kategoria {{ object.name }}
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        {% load get_previous_url %}
+        {% get_previous_url as previous_url %}
+        {% load get_object_by_slug %}
+
+        {% if previous_url.url_name == 'article-detail' %}
+            <a href="{% url 'article-detail' slug=previous_url.kwargs.slug %}">
+                {% find_by_slug 'Article' previous_url.kwargs.slug as article %}
+                {{ article.title }}
+            </a>
+        {% elif previous_url.url_name == 'news-detail' %}
+            <a href="{% url 'news-detail' slug=previous_url.kwargs.slug %}">
+                {% find_by_slug 'News' previous_url.kwargs.slug as news %}
+                {{ news.created_at_formated }} - {{ news.title }}
+            </a>
+        {% else %}
+            <span>
+                Kategoria {{ object.name }}
+            </span>
+        {% endif %}
+    </li>
+
+    {% if previous_url.url_name == 'article-detail' or previous_url.url_name == 'news-detail' %}
+    <li class="addons-lvl-2">
+        <span>
+            {{ object.name }}
+        </span>
+    </li>
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 header header-bg text-center">
+            <h4>Kategoria <br> <span class="text-muted">{{ object.name }}</span></h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center p-3 pt-4">
+            <small class="text-muted">Filtruj:</small><br>
+            {% if request.GET.filter %}
+                        <a href="{% url 'category-detail' slug=object.slug %}">Pokaż wszystko</a> •
+            {% endif %}
+
+            {% if not request.GET.filter == 'not_news' %}
+                <a href="{% url 'category-detail' slug=object.slug %}?filter=not_news">
+                    <span class="category-detail-article-ico">A</span>
+                    Pokaż tylko artykuły</a>
+                {% if not request.GET.filter == 'not_article' %}•{% endif %}
+            {% endif %}
+
+            {% if not request.GET.filter == 'not_article' %}
+                <a href="{% url 'category-detail' slug=object.slug %}?filter=not_article">
+                    <span class="category-detail-news-ico">N</span>
+                    Pokaż tylko newsy
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% load get_class_name %}
+
+    <div class="row mt-5 mb-5">
+        <div class="col-12 mx-auto col-md-11">
+            {% if object_list|length %}
+            <table class="table table-hover table-last-row-border">
+                {% for foo in object_list %}
+                    <tr data-href="{{ foo.get_absolute_url }}" class="clickable-row">
+                        <td>
+                            {% if foo|class_name == 'News' %}
+                                <span class="category-detail-news-ico">N</span>
+                            {% else %}
+                                <span class="category-detail-article-ico">A</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ foo.title }} - <strong>{{ foo.date }}</strong></td>
+                        <td>
+                            <a href="{{ foo.get_absolute_url }}">Czytaj</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <span class="w-100 d-block text-center">
+                    <i>Nie ma nic do wyświetlenia</i>
+                </span>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12 text-right text-uppercase hidden-md-up mt-3 p-4"> {% comment %}need margin top outline from description{% endcomment %}
+            {% if object|class_name == 'Author' %}
+                <a href="{% url 'author-list' %}"><< wróc do listy autorów</a>
+            {% elif object|class_name == 'Colleague' %}
+                <a href="{% url 'colleague-list' %}"><< wróc do listy współpracowników</a>
+            {% elif object|class_name == 'Editor' %}
+                <a href="{% url 'editor-list' %}"><< wróc do listy redaktorów</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

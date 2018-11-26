@@ -1,0 +1,107 @@
+@import "variables"
+
+#sidebar-wrapper
+  background-color: $navbar-bg-color
+  box-shadow: $small-shadow-right
+  font-family: $font-family-headers
+  font-weight: 300
+  display: flex
+  flex-direction: column
+  position: relative
+  min-height: 100vh
+  z-index: 999
+
+  &.sidebar-closed
+    @media (max-width: $small-max-width)
+      margin-left: -83.333333%
+
+  #sidebar-content
+    flex: 1
+
+  a:hover, a:active
+    text-decoration: underline
+
+#sidebar-wrapper
+  .separator
+    margin-top: 5px
+    margin-bottom: 5px
+    background-color: shade($separator-color, 3%)
+    height: 1px
+
+  li.separator
+    margin: 16px auto
+    height: 1px
+    width: 90%
+
+  #sidebar-header
+    margin: 3vh 10px 5vh
+
+    a
+      content: ''
+      height: 100%
+      width: 100%
+
+      img
+        max-width: 300px
+        width: 100%
+
+        height: auto
+
+.sidebar-links
+  li
+    margin-top: 12px
+    margin-bottom: 12px
+    margin-left: 24px
+
+    a
+      display: block
+      font-weight: 300
+      line-height: 1.5
+      font-size: 16px
+      text-transform: uppercase
+      padding: 4px
+
+      &, &:hover, &:active
+        color: $navbar-text-color
+
+  li.addons-lvl-1, li.addons-lvl-2, li.addons-lvl-3
+    a
+      text-transform: capitalize
+
+    a:before, span:before
+      content: "—"
+
+    span
+      padding: 4px
+
+  li.addons-lvl-1
+
+  li.addons-lvl-2
+    padding-left: 6px
+
+  li.addons-lvl-3
+    padding-left: 12px
+
+#sidebar-footer-links
+  padding: 0
+
+  li
+    display: inline-block
+
+    a
+      font-size: .8rem
+      padding-right: 5px
+      color: dimgrey
+
+      &:hover, &:active
+        text-decoration: none
+        color: dimgrey
+
+#sidebar-footer
+  text-align: center
+  list-style: none
+  padding: 0
+
+  #sidebar-footer-pwsz-logo-wrapper
+    width: 100%
+    text-align: center

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h1 class="big-digits align-middle">
+                {% block title %}{% block error_code %}{% endblock %}{% endblock %}
+            </h1>
+
+            <span class="text-muted h3">
+                {% block error_description %}{% endblock %}
+            </span> <br>
+
+            <a href="{% url 'index' %}" class="text-muted smaller">
+                wróć do strony
+            </a>
+
+        </div>
+    </div>
+
+{% endblock %}

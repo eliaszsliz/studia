@@ -1,0 +1,87 @@
+
+<div class="row">
+    <div class="col-12 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if show_first %}
+                <li class="page-item">
+                    <a href="?page=1" class="page-link">1</a>
+                </li>
+
+                <li class="page-item">
+                    <button class="page-link" data-toggle="modal" data-target="#paginationModal">...</button>
+                </li>
+
+           {% endif %}
+
+          {% for linkpage in page_numbers %}
+              {% ifequal linkpage page_obj.number %}
+                 <li class="page-item active"><a class="page-link" href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+              {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+              {% endifequal %}
+            {% endfor %}
+
+          {% if show_last %}
+                <li class="page-item">
+                    <button class="page-link" data-toggle="modal" data-target="#paginationModal">...</button>
+                </li>
+
+                <li class="page-item">
+                    <a href="?page=last" class="page-link">{{ pages }}</a>
+                </li>
+           {% endif %}
+          </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="paginationModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Przejdź do strony</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-12">
+                <label class="text-muted">
+                      <span class="text-muted small">Wprowadź numer od 1 do {{ pages }}</span>
+                  </label>
+              </div>
+
+                      <form action="" method="get" class="w-100">
+                          <div class="col-12">
+                            <div class="row">
+                              <input type="number" id="paginationModalInput" name="page"
+                                 min="1" max="{{ pages }}" class="form-control col-4 offset-2 text-center"
+                                  value="{{ page_obj.number }}">
+                                <button type="submit" id="paginationModalBtn"
+                                    class="btn btn-primary btn-sm col-4 ml-2">Przejdź</button>
+                            </div>
+                        </div>
+
+                      </form>
+
+
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    window.onload = function(e){
+        $('#paginationModal').modal({show: false});
+    }
+</script>

@@ -1,0 +1,249 @@
+@import "components/functions"
+@import "components/variables"
+@import "components/sidebar"
+@import "components/pagination"
+@import "components/detail-views"
+@import "components/list-views"
+@import "components/index"
+@import "components/article-and-news"
+
+// Grid
+html, body
+  overflow-x: hidden
+
+#main-wrapper
+  flex-wrap: nowrap
+  width: 100%
+  margin-left: 0
+  margin-right: 0
+
+#content-wrapper
+  background: $bg-color linear-gradient(to bottom, tint($bg-color, 10%) 0%, $bg-color 100%)
+
+#main-wrapper
+  @media (max-width: $small-max-width)
+    margin-top: $mobile-navbar-height
+
+@media (max-width: $xsmall-max-width)
+  #content-wrapper
+    padding-left: 0
+    padding-right: 0
+
+#navbar-sidebar-close
+  font-size: 35px
+  padding: 2px 17px 0
+  color: #949596
+
+#mobile-navbar
+  height: $mobile-navbar-height
+
+  .navbar-toggler-right
+    right: .5rem
+
+@media (min-height: 980px) and (min-width: $large-min-width)
+  #sidebar-wrapper
+    position: fixed
+    height: 100vh
+
+  #content-wrapper
+    margin-left: calc(25% - 0px)
+
+// Universal
+h1, h2, h3, h4, .h1, .h2, .h3, .h4
+  margin-top: .2rem
+  font-family: $font-family-headers
+  font-weight: 400
+
+a
+  color: $primary-color
+
+  &:hover, &:active
+    text-decoration: none
+    color: $brisk-color
+
+  &.smaller
+    color: shade($brisk-color, 10%)
+
+  &.brisk-link
+    color: shade($brisk-color, 10%)
+
+    &:hover
+      text-decoration: underline
+      text-decoration-style: dotted
+
+  &.h1, &.h2, &.h3, &.h4, &.h5
+    &:hover, &:active
+      color: $brisk-color
+
+
+.clickable-row
+  cursor: pointer
+
+  &:hover > td
+    border-top: 1px solid $main-color
+
+  &:hover + .clickable-row > td
+    border-top: 1px solid $main-color
+
+  &:last-of-type
+    td
+      border-bottom: 1px solid $main-color
+
+  &:hover a
+    color: shade($brisk-color, 10%)
+
+
+.table-last-row-border
+  tr:last-child
+    td
+      border-bottom: 1px solid $table-border-color
+
+    &:hover
+      td
+        border-bottom: 1px solid $main-color
+
+
+
+
+.table-semi-sm
+  tr td
+    padding-top: .5rem
+    padding-bottom: .5rem
+
+.really-hidden
+  visibility: hidden
+
+.comma-list
+  &:not(:last-of-type)
+    &:after
+      content: ","
+
+.smaller
+  font-size: .8rem
+
+.secondary-text
+  font-size: .9rem
+
+.header
+  text-align: center
+  padding-top: 4vh
+  padding-bottom: 4vh
+  box-shadow: inset 0 0 3px -1px rgba(black, .05)
+  color: shade($grey-text, 5%)
+  text-shadow: 1px 1px 1px rgba(black, .1)
+
+  &.header-bg
+    background: linear-gradient(rgba(0,0,0,.03), rgba(0,0,0,.03)), url("../images/bg-diamond.png")
+    background-size: 60px
+
+  h1, .h1
+    font-size: 4rem
+
+  h2, .h2
+    font-size: 3rem
+
+  @media (max-width: $xsmall-max-width)
+    h1, h2, .h1, .h2
+      font-size: 2rem
+
+.small-shadow
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .4)
+
+.light-shadow
+  box-shadow: 2px 0px 6px -1px rgba(0, 0, 0, .09)
+
+div.separator
+  background-color: #ccc
+  height: 1px
+  content: ''
+
+div.horizontal-border-right
+  border-right: 1px solid #ccc
+
+div.horizontal-border-lg-right
+  @media (min-width: $large-min-width)
+    border-right: 1px solid #ccc
+
+div.horizontal-border-lg-left
+  @media (min-width: $large-min-width)
+    border-left: 1px solid #ccc
+
+.dot-separator
+  &:after
+    content: "\2022"
+    color: black
+
+.table-hover
+  tr:hover, tr:active
+    td
+      background-color: tint($navbar-bg-color, 80%)
+
+
+
+.no-wrap
+  white-space: nowrap
+
+.max-w-170
+  max-width: 170px
+
+.pb-6
+  padding-bottom: 5rem
+
+strong, .strong
+  font-weight: 600
+
+.ml-075rem
+  margin-left: .75rem
+
+.mr-15px
+  margin-right: 15px
+
+.text-095rem
+  font-size: .95rem
+
+.text-097rem
+  font-size: .97rem
+
+.btn
+  border-radius: 1px
+
+.btn-primary
+  background-color: $primary-color
+  border-color: $primary-color
+
+  &:hover, &:active
+    background-color: $primary-color-hover
+    border-color: $primary-color-hover
+
+// do poszczegolnych widokow
+.article-body, .flat-page-body, .person-body, .news-body
+  p
+    text-align: justify
+    text-justify: inter-word
+
+
+  hr
+    margin: 2rem auto
+    width: 60%
+
+    @media (max-width: $xsmall-max-width)
+      width: 90%
+
+  ul
+    list-style: square
+
+  ul, ol
+    @media (max-width: $xsmall-max-width)
+      padding-left: 20px
+
+  img
+    max-width: 99%
+    box-shadow: 2px 0 3px -1px rgba(0, 0, 0, .15)
+    margin: 15px
+
+    &.float-left
+      margin-left: 0
+
+    &.float-right
+      margin-right: 0
+

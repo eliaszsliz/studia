@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+
+{% block title %} Pomoc | Panel administracyjny{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">
+    Panel administracyjny
+</a></h1>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">Strona główna</a>
+&rsaquo; Pomoc
+</div>
+{% endblock %}
+
+{% block nav-global %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Pomoc</h1>
+<p>Coś tam coś tam</p>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

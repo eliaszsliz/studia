@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista artykułów z roku {{ object.date }}
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        {% load get_previous_url %}
+        {% load get_object_by_slug %}
+        {% get_previous_url as previous_url %}
+
+        {% if previous_url.url_name == 'author-detail' %}
+            <a href="{% url 'author-list' %}">
+                Lista autorów
+            </a>
+        {% elif previous_url.url_name == 'category-detail' %}
+           <a href="{% url 'category-detail' slug=previous_url.kwargs.slug %}">
+                {% find_by_slug 'Category' previous_url.kwargs.slug as category %}
+                Kategoria {{ category.name }}
+            </a>
+        {% else %}
+            <a href="{% url 'issue-list' %}">
+                Lista numerów
+            </a>
+        {% endif %}
+    </li>
+
+    <li class="addons-lvl-2">
+        {% if previous_url.url_name == 'author-detail' %}
+            <a href="{% url 'author-detail' slug=previous_url.kwargs.slug %}">
+                {% find_by_slug 'Author' previous_url.kwargs.slug as author %}
+                {{ author.full_name }}
+            </a>
+        {% elif previous_url.url_name == 'category-detail' %}
+            <span>
+                {{ object.title }}
+            </span>
+        {% else %}
+            <a href="{{ object.belong_to.get_absolute_url }}">
+                {{ object.belong_to }}
+            </a>
+        {% endif %}
+    </li>
+
+    {% if not previous_url.url_name == 'category-detail' %}
+    <li class="addons-lvl-3">
+        <span>
+            {{ object.title }}
+        </span>
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 header header-bg text-center">
+            {% if object.title|length > 30 %}
+                <h3>{{ object.title }}</h3>
+            {% elif object.title|length > 16 %}
+                <h2>{{ object.title }}</h2>
+            {% else %}
+                <h1>{{ object.title }}</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% if object.belong_to %}
+        <div class="col-12 text-center p-3 pt-4">
+            <small class="text-muted">Wydanie:</small>
+            <a href="{{ object.belong_to.get_absolute_url }}">
+                {{ object.belong_to.date }}
+            </a>
+        </div>
+        {% endif %}
+
+        {% if object.belong_to and object.authors.count %}
+        <div class="col-12 m-2">
+            <div class="row">
+                <div class="col-5 mx-auto separator"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if object.authors.count %}
+        <div class="col-12 text-center p-3 pb-4">
+            <small class="text-muted">Autor{{ object.authors.count|pluralize:',zy' }}:</small>
+            {% for author in object.authors.all %}
+                <a href="{{ author.get_absolute_url }}" class="comma-list">
+                    {{ author }}
+                </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-11 mx-auto article-body">
+            {{ object.body|safe }}
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-11 mx-auto text-right">
+            {% if object.categories.count %}
+                <small class="text-muted">Kategorie:</small>
+                {% for category in object.categories.all %}
+                    <a href="{{ category.get_absolute_url }}" class="comma-list">{{ category }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

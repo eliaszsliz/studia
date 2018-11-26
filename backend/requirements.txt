@@ -1,0 +1,12 @@
+Django==1.11.7
+djangorestframework
+Pillow==4.3.0
+django-autoslug==1.9.3
+django-sass-processor==0.5.6
+django-tinymce==2.6.0
+libsass==0.13.3
+olefile==0.44
+pytz==2017.3
+six==1.11.0
+virtualenv==15.1.0
+django-cors-headers==2.2.0

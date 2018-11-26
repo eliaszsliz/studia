@@ -1,0 +1,36 @@
+@import "variables"
+
+.issue-list-header
+  color: tint(black, 10%)
+  text-shadow: 1px 1px 1px rgba(black, .05)
+
+  @media (max-width: $medium-max-width)
+    &:before, &:after
+      content: ''
+      width: 30%
+      background-color: $separator-color
+      height: 1px
+      vertical-align: middle
+      display: inline-block
+
+.issue-list-cover
+  max-width: 100%
+
+.news-list-element:nth-of-type(2n)
+  background-color: tint($navbar-bg-color, 80%)
+
+.index-news-list-element
+  &:not(:first-of-type)
+    padding-left: 1rem
+
+  &:not(:last-of-type)
+    padding-right: 1rem
+
+
+.person-list-header
+  color: tint(black, 10%)
+  text-shadow: 1px 1px 1px rgba(black, .08)
+
+.last-p-is-inline
+  p:last-of-type
+    display: inline

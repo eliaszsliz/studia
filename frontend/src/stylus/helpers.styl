@@ -1,0 +1,35 @@
+#app
+  .strong
+    font-weight: 600
+
+  .text-justify
+    text-align justify
+
+  .cursor-pointer
+    cursor: pointer
+
+  .cursor-default
+    cursor: default
+
+  .ml-auto
+    margin-left: auto
+
+  .mr-auto
+    margin-right: auto
+
+
+mx-auto(args = null)
+  margin-left: auto args
+  margin-right auto args
+
+.align-vertically
+  & > *
+    vertical-align: middle
+
+  &::before
+    content: ""
+    display: inline-block
+    height: 100%
+    width: 1px
+    vertical-align: middle
+

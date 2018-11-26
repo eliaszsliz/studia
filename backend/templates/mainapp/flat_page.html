@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 header header-bg text-center">
+            {% if object.title|length > 40 %}
+                <h3>{{ object.title }}</h3>
+            {% elif object.title|length > 16 %}
+                <h2>{{ object.title }}</h2>
+            {% else %}
+                <h1>{{ object.title }}</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-11 mx-auto flat-page-body">
+            {{ object.body|safe }}
+        </div>
+    </div>
+
+{% endblock %}

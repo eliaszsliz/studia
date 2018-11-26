@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400&amp;subset=latin-ext" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <title>Studia Pigoniana - {% block title %}{% endblock %}</title>
+
+
+    {% load static %}
+    {% load sass_tags %}
+    <link href="{% sass_src 'css/styles.sass' %}" rel="stylesheet" type="text/css"/>
+
+
+</head>
+<body>
+            <nav id="mobile-navbar" class="navbar navbar-inverse bg-inverse fixed-top hidden-md-up">
+                <button type="button" id="navbar-sidebar-open"
+                        class="navbar-toggler navbar-toggler-right">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <button type="button" id="navbar-sidebar-close"
+                        class="navbar-toggler navbar-toggler-right d-none">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </nav>
+
+
+        <div id="main-wrapper" class="row"
+                                             style="{% if request.GET.top == 'brisk' %}
+                                                border-top: 5px solid #680223;
+                                            {% else %}
+                                                border-top: 5px solid #005A7B;
+                                            {% endif %}">
+            <div id="sidebar-wrapper" class="col-10 col-md-4 col-lg-3 sidebar-closed">
+                <div id="sidebar-header">
+                    <a href="{% url 'index' %}">
+                        <img src="{% static 'images/logo-pig.png' %}" alt="">
+                    </a>
+                </div>
+
+                <div id='sidebar-content'>
+                    <ul class="list-unstyled sidebar-links">
+                        <li><a href="{% url 'issue-list' %}">Archiwum</a></li>
+                        {% load sidebar %}
+                        {% get_current_issue as current_issue %}
+                        {% if current_issue %}
+                        <li><a href="{{ current_issue.get_absolute_url }}">Aktualne wydanie</a></li>
+                        {% endif %}
+                        {% if current_issue.next %}
+                        <li><a href="{{ current_issue.next.get_absolute_url }}">Następne wydanie</a></li>
+                        {% endif %}
+                        <li class="separator"></li>
+                        <li><a href="{% url 'editor-list' %}">Redakcja</a></li>
+                        <li><a href="{% url 'colleague-list' %}">Współpracownicy</a></li>
+
+                        <li>
+                            <a href="{% url 'news-list' %}">Z pracy redakcji</a>
+                        </li>
+
+                        {% get_flat_pages_sidebar as flatpages_top %}
+                        {% for flatpage in flatpages_top %}
+                            <li>
+                                <a href="{{ flatpage.get_absolute_url }}">{{ flatpage.name|capfirst }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% block navbar_addons %}
+                        {% endblock %}
+
+                    </ul>
+                </div>
+
+                <div id="sidebar-footer">
+                    <a href="http://www.pwsz.krosno.pl/" id="sidebar-footer-pwsz-logo-wrapper">
+                        <img src="{% static 'images/pwsz-logo.png' %}" alt="">
+                    </a>
+
+                    <div class="separator"></div>
+
+                    <ul id="sidebar-footer-links">
+                        <li><a href="{% url 'author-list' %}">Autorzy</a></li>
+                        {% get_flat_pages_footer as flatpages_footer %}
+
+                        {% for flatpage in flatpages_footer %}
+                            <li>
+                                <a href="{{ flatpage.get_absolute_url }}">{{ flatpage.link_name|capfirst }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
+            <div id="content-wrapper" class="col-12 col-md-8 col-lg-9 pb-6">
+                    {% block content %}
+                    {% endblock %}
+            </div>
+        </div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

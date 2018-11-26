@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load get_class_name %}
+
+{% block title %}
+    {{ object.name_prefix|default_if_none:"" }} {{ object.full_name }}
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        <a href="{{ object.list_url }}">Lista
+        {% if object|class_name == 'Author' %}
+            autorów
+        {% elif object|class_name == 'Editor' %}
+            redaktorów
+        {% else %}
+            współpracowników
+        {% endif %}
+        </a>
+    </li>
+
+    <li class="addons-lvl-2">
+        <span>
+            {{ object.full_name }}
+        </span>
+    </li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-11 mx-auto">
+            <div class="row">
+                <div class="col-12 text-center text-lg-left mb-2">
+                    <div class="p-3 light-shadow d-inline-block person-detail-avatar-wrapper">
+                        <img src="{{ object.avatar_url }}"
+                                     class="img-fluid small-shadow person-detail-avatar max-w-170"
+                                     alt="Zdjęcie {{ object.full_name }}">
+                    </div>
+                </div>
+
+                <div class="col-12 person-detail-description-wrapper">
+                        <h4>
+                            {% if object.name_prefix %}
+                            <small>{{ object.name_prefix }}</small>
+                            {% endif %}
+                            {{ object.full_name }}
+                        </h4>
+                    {% if object.description %}
+                        <div class="w-100 person-body text-justify">{{ object.description|safe }}</div>
+                    {% else %}
+                        {{ object.short_description }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if object|class_name == 'Author' and object.articles.count %}
+    <div class="row my-5">
+        <div class="col-12 col-md-11 mx-auto">
+            <h4 class="text-left ml-075rem">Artykuły tego autora:</h4>
+
+            <table class="table table-hover table-last-row-border">
+                {% for article in object.articles.all %}
+                    <tr data-href="{{ article.get_absolute_url }}" class="clickable-row">
+                        <td>{{ article.title }}</td>
+                        <td><a href="{{ article.get_absolute_url }}">Czytaj</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+    <div class="row">
+            {# need margin top because description has outline  #}
+        <div class="col-11 mx-auto text-right text-uppercase mt-3 pt-3">
+            {% if object|class_name == 'Author' %}
+                <a href="{% url 'author-list' %}" class="btn btn-primary btn-sm">Lista autorów</a>
+            {% elif object|class_name == 'Colleague' %}
+                <a href="{% url 'colleague-list' %}" class="btn btn-primary btn-sm">Lista współpracowników</a>
+            {% elif object|class_name == 'Editor' %}
+                <a href="{% url 'editor-list' %}" class="btn btn-primary btn-sm">Lista redaktorów</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load get_class_name %}
+
+
+{% block title %}
+    Lista
+        {% if object_list|class_name == 'Author' %}
+            autorów
+        {% elif object_list|class_name == 'Editor' %}
+            redaktorów
+        {% else %}
+            współpracowników
+        {% endif %}
+{% endblock %}
+
+{% block navbar_addons %}
+    <li class="separator"></li>
+
+    <li class="addons-lvl-1">
+        <span>Lista
+        {% if object_list|class_name == 'Author' %}
+            autorów
+        {% elif object_list|class_name == 'Editor' %}
+            redaktorów
+        {% else %}
+            współpracowników
+        {% endif %}
+        </span>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 header header-bg">
+            <h1 class="issue-header">{{ object_list|plural_name }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-11 mx-auto col-md-12 col-lg-10">
+            {% for object in object_list %}
+                <div class="row mt-3 pt-5">
+                    <div class="col-8 offset-2 col-sm-3 offset-sm-0 text-center px-0">
+                        {% if object.description or object.articles.count %}
+                            <a href="{{ object.get_absolute_url }}" class="d-inline-block">
+                                <img src="{{ object.avatar_url }}"
+                                     class="img-fluid small-shadow"
+                                     alt="{{ object.name_prefix }} {{ object.full_name }}">
+                            </a>
+                        {% else %}
+                            <img src="{{ object.avatar_url }}"
+                                 class="img-fluid small-shadow"
+                                 alt="{{ object.name_prefix }} {{ object.full_name }}">
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12 col-sm-9 text-justify">
+                        <div class="row">
+                            <div class="col-11">
+                                {% if object.description or object.articles.count %}
+                                    <a href="{{ object.get_absolute_url }}" class="h4 person-list-header d-block mt-3 mt-md-0">
+                                {% else %}
+                                    <h4 class="person-list-header mt-3 mt-md-0">
+                                {% endif %}
+
+                                    {% if object.name_prefix %}
+                                        <small class="text-muted">{{ object.name_prefix }} </small>
+                                    {% endif %}
+
+                                    {{ object.full_name }}
+
+                                    {% if object.function %}
+                                        <span class="text-muted"> - {{ object.function }}</span>
+                                    {% endif %}
+
+                                {% if object.description or object.articles.count %}
+                                    </a>
+                                {% else %}
+                                    </h4>
+                                {% endif %}
+
+                                {% if object.short_description %}
+                                    {{ object.short_description }}
+                                {% else %}
+                                    {{ object.description|safe|truncatewords:50 }}
+                                {% endif %}
+
+                                {% if object.description|wordcount or object.articles.count  %}
+                                    <a href="{{ object.get_absolute_url }}" class="brisk-link no-wrap">( Więcej )</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

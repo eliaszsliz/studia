@@ -1,0 +1,71 @@
+@import "variables"
+
+.issue-detail-header
+  font-family: $font-family-headers
+  cursor: default
+  line-height: 4rem
+  font-size: 4rem
+  font-weight: bold
+
+  .navigation-arrow
+    font-size: 2.1rem
+    line-height: 3.5rem
+
+.issue-detail-cover-wrapper, .person-detail-avatar-wrapper
+  background-color: tint($main-color, 60%)
+  position: relative
+  z-index: 105
+
+.issue-detail-cover-wrapper
+  @media (min-width: $xlarge-min-width + 130)
+    &:before
+      content: ""
+      height: 100%
+      width: 9999px
+      position: absolute
+      top: 0
+      left: -9999px
+      background-color: tint($main-color, 60%)
+
+.issue-detail-cover
+  @media (max-width: $medium-max-width)
+    max-width: 170px
+
+.issue-detail-description-wrapper, .person-detail-description-wrapper
+  background-color: tint($main-color, 80%)
+  outline: 1.5rem solid tint($main-color, 80%)
+  position: relative
+  z-index: 100
+  color: rgba($text-color, .85)
+
+
+.category-detail-article-ico, .category-detail-news-ico
+  font-size: 2rem
+  font-family: $font-family-serif
+  text-shadow: 1px 0 2px rgba(0, 0, 0, 0.1)
+
+.person-detail-description-wrapper
+  outline-offset: -2px
+
+#issue-detail-arrow-right, #issue-detail-arrow-left
+  fill: #c0c4c8
+  height: 2.4rem
+  line-height: 4rem
+  vertical-align: middle
+  cursor: pointer
+
+  &:hover, &:active, &:focus
+    fill: $brisk-color
+
+.category-detail-article-ico
+  color: $brisk-color
+
+.category-detail-news-ico
+  color: $primary-color
+
+.big-digits
+  font-size: 10rem
+  font-weight: 700
+  color: $main-color
+  text-shadow: 1px 0 2px rgba(0, 0, 0, 0.1)
+  font-family: $font-family-serif
